@@ -59,7 +59,12 @@ const OnboardingScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const translateX = (scrollX / windowWidth) * indicatorWidth;
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light' ? Colors.light.tint : Colors.dark.tint,
+      }}>
       <StatusBar
         barStyle={colorScheme === 'light' ? 'light-content' : 'dark-content'}
         backgroundColor={
@@ -100,7 +105,7 @@ const OnboardingScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
             <ThemedView style={styles.buttonContainer}>
               <Button
                 title="Sign Up"
-                onPress={() => navigation.navigate('SignUp')} // Navigate to SignUp
+                onPress={() => navigation.navigate('SignUp')}
               />
               <ThemedView style={styles.scrollBarContainer}>
                 <ThemedView
@@ -129,8 +134,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     height: '50%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 30,
     paddingVertical: 50,
   },
   childContentContainer: {

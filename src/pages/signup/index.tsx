@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   StatusBar,
   useColorScheme,
   Image,
@@ -22,11 +21,18 @@ const SignUp = ({navigation}: {navigation: NavigationProp<any>}) => {
   const colorScheme = useColorScheme() ?? 'light';
   const [form, setForm] = useState({
     email: '',
-    password: '',
     phone: '',
+    password: '',
   });
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light'
+            ? Colors.light.background
+            : Colors.dark.background,
+      }}>
       <StatusBar
         barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'}
         backgroundColor={
@@ -71,17 +77,18 @@ const SignUp = ({navigation}: {navigation: NavigationProp<any>}) => {
             keyboardType="email-address"
           />
           <FormField
-            title="Phone Number"
+            title="Phone"
             value={form.phone}
-            placeholder="Enter your Phone Number"
+            placeholder="Enter your phone number"
             handleChangeText={e => setForm({...form, phone: e})}
-            keyboardType="phone"
+            keyboardType="phone-pad"
           />
           <FormField
             title="Password"
             value={form.password}
             placeholder="Password"
             handleChangeText={e => setForm({...form, password: e})}
+            secureTextEntry
           />
         </ThemedView>
         <Button

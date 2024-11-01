@@ -31,7 +31,14 @@ const SignIn = ({navigation}: {navigation: NavigationProp<any>}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light'
+            ? Colors.light.background
+            : Colors.dark.background,
+      }}>
       <StatusBar
         barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'}
         backgroundColor={
