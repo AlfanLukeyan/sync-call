@@ -3,7 +3,10 @@
   "compilerOptions": {
     "typeRoots": ["./types", "node_modules/@types"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "src", "types"],
   "exclude": ["node_modules"]
