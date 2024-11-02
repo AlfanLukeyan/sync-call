@@ -14,7 +14,14 @@ import {ThemedView, ThemedText, Button} from '../../../components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from '../../../constants/Colors';
 
-export default function HomeScreen() {
+import {NavigationProp} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+export default function HomeScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<any>;
+}) {
   const colorScheme = useColorScheme() ?? 'light';
 
   const usersData = [
@@ -61,27 +68,13 @@ export default function HomeScreen() {
             : Colors.dark.background
         }
       />
-      <ScrollView>
+      <ScrollView style={{flex: 1}}>
         <ThemedView
           lightColor={Colors.light.background}
           darkColor={Colors.dark.background}
           style={styles.container}>
           <ThemedView style={styles.headerContainer}>
-            <Ionicons
-              size={24}
-              name="person"
-              color={
-                colorScheme === 'light' ? Colors.light.icon : Colors.dark.icon
-              }
-            />
             <ThemedText type="default">Hii, Good noon</ThemedText>
-            <Ionicons
-              name="notifications"
-              size={24}
-              color={
-                colorScheme === 'light' ? Colors.light.icon : Colors.dark.icon
-              }
-            />
           </ThemedView>
           <ThemedText type="title" style={styles.headline}>
             Using Sync Call makes it EASY~
@@ -112,7 +105,10 @@ export default function HomeScreen() {
               contentContainerStyle={styles.scrollContainer}>
               {usersData.map((user, index) => (
                 <View key={index}>
-                  <Button title={user.initial} onPress={() => null} />
+                  <Button
+                    title={user.initial}
+                    onPress={() => navigation.navigate('Call')}
+                  />
                   <ThemedText style={{textAlign: 'center', marginTop: 5}}>
                     {user.username}
                   </ThemedText>
@@ -210,7 +206,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingVertical: 10,
   },
   headline: {
