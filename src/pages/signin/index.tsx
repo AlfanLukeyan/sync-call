@@ -26,8 +26,7 @@ const SignIn = ({navigation}: {navigation: NavigationProp<any>}) => {
   });
 
   const handleSignIn = () => {
-    console.log('Sign In Button Pressed!', form);
-    // Add your sign-in logic here, e.g., API call for authentication
+    navigation.navigate('MainTabs');
   };
 
   return (
