@@ -1,7 +1,13 @@
 import React, {useEffect, useReducer} from 'react';
+import {View, Text, useColorScheme} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import {Colors} from './constants/Colors';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {
   OnboardingScreen,
@@ -10,7 +16,6 @@ import {
   HomeScreen,
   NotificationScreen,
 } from './pages';
-import {View, Text} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,31 +40,34 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'RESTORE_TOKEN':
-      return {
-        ...state,
-        userToken: action.token,
-        isLoading: false,
-      };
+      return {...state, userToken: action.token, isLoading: false};
     case 'SIGN_IN':
-      return {
-        ...state,
-        isSignout: false,
-        userToken: action.token,
-      };
+      return {...state, isSignout: false, userToken: action.token};
     case 'SIGN_OUT':
-      return {
-        ...state,
-        isSignout: true,
-        userToken: null,
-      };
+      return {...state, isSignout: true, userToken: null};
     default:
       return state;
   }
 }
 
-function MainTabs() {
+function HomeStack() {
+  const colorScheme = useColorScheme() ?? 'light';
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color, size}) => {
+          let iconName = '';
+
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Notifications') {
+            iconName = 'notifications';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+      })}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -71,6 +79,32 @@ function MainTabs() {
         options={{headerShown: false}}
       />
     </Tab.Navigator>
+  );
+}
+
+function AuthStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Onboarding"
+        component={OnboardingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{
+          headerShown: false,
+          title: 'Sign in',
+          animationTypeForReplace: 'pop',
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
   );
 }
 
@@ -98,35 +132,11 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {state.userToken == null ? (
-          <>
-            <Stack.Screen
-              name="Onboarding"
-              component={OnboardingScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="SignIn"
-              component={SignIn}
-              options={{
-                headerShown: false,
-                title: 'Sign in',
-                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-              }}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{headerShown: false}}
-            />
-          </>
+          <Stack.Screen name="Auth" component={AuthStack} />
         ) : (
-          <Stack.Screen
-            name="MainTabs"
-            component={MainTabs}
-            options={{headerShown: false}}
-          />
+          <Stack.Screen name="Main" component={HomeStack} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
