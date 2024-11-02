@@ -15,6 +15,7 @@ import {
   SignUp,
   HomeScreen,
   NotificationScreen,
+  CallScreen,
 } from './pages';
 
 const Stack = createNativeStackNavigator();
@@ -67,6 +68,11 @@ function HomeStack() {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          borderTopWidth: 0,
+        },
       })}>
       <Tab.Screen
         name="Home"
@@ -136,7 +142,10 @@ function App(): React.JSX.Element {
         {state.userToken == null ? (
           <Stack.Screen name="Auth" component={AuthStack} />
         ) : (
-          <Stack.Screen name="Main" component={HomeStack} />
+          <>
+            <Stack.Screen name="Main" component={HomeStack} />
+            <Stack.Screen name="Call" component={CallScreen} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
