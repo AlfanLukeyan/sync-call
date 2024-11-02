@@ -15,14 +15,12 @@ import {View, Text} from 'react-native';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Initial state for authentication management
 const initialState = {
   isLoading: true,
   isSignout: false,
   userToken: null,
 };
 
-// Reducer to manage different app states
 type State = {
   isLoading: boolean;
   isSignout: boolean;
@@ -80,22 +78,17 @@ function App(): React.JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    // Simulate token loading delay with setTimeout
     const bootstrapAsync = () => {
       setTimeout(() => {
-        // Use dummy data to simulate a retrieved token
         const userToken = 'dummy-auth-token';
-
-        // Dispatch token restoration action
         dispatch({type: 'RESTORE_TOKEN', token: userToken});
-      }, 1000); // Simulated 1-second delay
+      }, 1000);
     };
 
     bootstrapAsync();
   }, []);
 
   if (state.isLoading) {
-    // While loading, just return null to indicate a loading state without UI
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Loading...</Text>
@@ -107,7 +100,6 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       <Stack.Navigator>
         {state.userToken == null ? (
-          // User is not signed in
           <>
             <Stack.Screen
               name="Onboarding"
@@ -130,7 +122,6 @@ function App(): React.JSX.Element {
             />
           </>
         ) : (
-          // User is signed in
           <Stack.Screen
             name="MainTabs"
             component={MainTabs}
