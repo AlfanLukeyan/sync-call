@@ -14,11 +14,16 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@types/react-native-vector-icons": "^6.4.18",
+    "@types/react-native-webrtc": "^1.75.9",
+    "janus-gateway": "^1.2.4",
     "react": "18.3.1",
     "react-native": "0.76.1",
+    "react-native-incall-manager": "^4.2.0",
     "react-native-safe-area-context": "^4.13.1",
     "react-native-screens": "^3.35.0",
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-vector-icons": "^10.2.0",
+    "react-native-webrtc": "^124.0.4",
+    "webrtc-adapter": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
